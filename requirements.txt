@@ -1,0 +1,6 @@
+scrapy
+selenium
+Django
+djangorestframework
+psycopg2-binary
+Flask>=2.0.0
