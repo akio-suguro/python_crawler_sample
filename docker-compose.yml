@@ -7,8 +7,12 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    working_dir: /app/scraper  # scraperディレクトリを指定
     depends_on:
       - db
+    environment:
+      - DISPLAY=:99
+      - PYTHONPATH=/app  # PYTHONPATHを設定
 
   db:
     image: postgres

@@ -1,31 +1,28 @@
-# ベースイメージ
-FROM python:3.9-slim
+# 基本イメージ
+FROM python:3.11-slim
 
-# 作業ディレクトリの設定
-WORKDIR /app
-
-# 必要なシステムパッケージをインストール
+# 必要なパッケージをインストール
 RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
-    chromium-driver \
-    chromium \
+    wget \
     curl \
     unzip \
+    chromium-driver \
+    chromium \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# requirements.txtを作業ディレクトリにコピー
-COPY ./requirements.txt /app/requirements.txt
+# Chromeのバージョンを指定する場合
+# RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+#     dpkg -i google-chrome-stable_current_amd64.deb; \
+#     apt-get -f install -y; \
+#     rm google-chrome-stable_current_amd64.deb
 
-# Pythonパッケージをインストール
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# 必要なPythonパッケージのインストール
+WORKDIR /app
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
 
-# 環境変数でChromiumのパスを指定
-ENV CHROME_BIN=/usr/bin/chromium \
-    CHROME_DRIVER=/usr/bin/chromedriver
-
-# アプリケーションコードを全てコピー
+# アプリケーションのコピー
 COPY . /app/
 
 # Djangoのマイグレーションとサーバーの起動

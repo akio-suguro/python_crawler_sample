@@ -9,7 +9,13 @@ class ExampleSpider(scrapy.Spider):
 
     def __init__(self):
         chrome_options = Options()
-        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")  # ヘッドレスモードで起動
+        chrome_options.add_argument("--no-sandbox")  # セキュリティのためのサンドボックスを無効化
+        chrome_options.add_argument("--disable-dev-shm-usage")  # 共有メモリの使用を無効化
+        chrome_options.add_argument("--remote-debugging-port=9222")  # デバッグポートを設定
+        chrome_options.add_argument("--disable-gpu")  # GPU使用を無効化
+        chrome_options.add_argument("--window-size=1920x1080")  # ウィンドウサイズを設定
+
         self.driver = webdriver.Chrome(options=chrome_options)
 
     def parse(self, response):
