@@ -1,7 +1,7 @@
 import scrapy
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from .items import ScrapedDataItem
+from scraper.items import ScrapedDataItem
 
 class ExampleSpider(scrapy.Spider):
     name = 'example'
